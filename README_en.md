@@ -10,6 +10,7 @@ In this exercise sheet, you will learn to read and write UML class and sequence 
   * `«get/set»` denotes a private field with a public getter and setter.
   * `«get»` denotes a private (readonly) field with a public getter.
 
+
 ## Exercise: Library Management System
 
 You are tasked with designing a Library Management System using object-oriented programming principles in Java. 
@@ -100,6 +101,124 @@ classDiagram
         -totalCost: double
         +addDish(dish: SushiDish): void
     }
+```
+
+## Exercise: Student Enrollment System (Transformation of an UML Class Diagram Modeling with Focus on Associations)
+
+You are tasked with designing a student enrollment system using object-oriented programming principles in Java.
+The system should be able to store information about users (admins, students, lecturers), courses, modules, and grades.
+
+
+
+### Tasks
+
+1. Given the class diagram provided below, implement the Java classes for the `User`, `Student`, `Lecturer`, `Course`, `Module`, `Admin`, and `UniversityAdministration` classes in the `de.phl.programmingproject.enrollmentsystem` package.
+   * Each class should have appropriate constructors, getters, and setters.
+   * Pay special attention on the implementation of the associations.
+2. Create a main method to test your Student Enrollment System.
+
+For clarification, in case it is not visible in the UML diagram, the following are the requirements for the associations:
+* An admin can manage one system. The system can be managed by two admins.
+* An admin can manage multiple students. A student can be managed by two admins.
+* An admin can manage multiple lecturers. A lecturer can be managed by two admins.
+* A student can attend multiple courses, and a course can have multiple students.
+    * Students cannot attend the same course twice.
+* A lecturer can teach multiple courses, but a course can only be taught by one lecturer.
+    * The courses to be taught by a lecturer are ordered.
+* A module consists of exactly 5 courses, and a course can be part of only one module.
+    * The courses in a module are ordered and unique.
+* A lecturer can edit multiple modules, but one module can only be edited by one lecturer.
+* The university administration can edit multiple modules, but one module can only be edited by one university administration.
+
+```mermaid
+
+classDiagram
+    
+    class User{
+        +name: String
+        -password: String
+        +setPassword(password: String): void
+        +communicate(message: String, recipients: List<User>): void
+    }
+    
+    class UniversityAdministration{
+        +name: String
+        -password: String
+        +setPassword(password: String): void
+        +communicate(message: String, recipients: List<User>): void
+    }
+    
+    class Admin{
+        +name: String
+        -password: String
+        +setPassword(user: User, password: String): void
+        +getPassword(): String
+        +communicate(message: String, recipients: List<User>): void
+  }
+    User <|-- Admin
+
+    Admin "2" <--> "1" UniversityAdministration: manages &#9654
+
+    class Student{
+        +name: String
+        +dateOfBirth: Date
+        +id: int
+        +residence: String
+        +subject: String
+        +studyProgram: String
+        -password: String
+        +enroll(course: Course): void
+        +getGrade(module: Module): double
+        +communicate(message: String, recipients: List<User>): void
+        +setPassword(password: String): void
+    }
+    
+    User <|-- Student
+    Admin "2" <--> "1..*" Student: manages &#9654
+    
+    class Lecturer{
+        +name: String
+        +age: double
+        +field: String
+        -password: String
+        +teach(course: Course): void
+        +communicate(message: String, recipients: List<User>): void
+        +setPassword(password: String): void    
+    }
+    
+    User <|-- Lecturer
+    Admin "2" <--> "1..*" Lecturer: manages &#9654
+    
+    class Course{
+        +name: String
+        +numberOfStudents: int
+        +proofOfParticipation: String
+        +module: Module
+        +getStudents(): List<Student>
+        +getNumberOfStudents(): int
+        +setNumberOfStudents(numberOfStudents: int): void
+        +setProofOfParticipation(proofOfParticipation: String): void
+        +getModule(): Module
+        +setModule(module: Module): void
+    }
+    
+    Student "1..* {unique}" <--> "1..* {unique}" Course: attends &#9654
+    Lecturer "1" <--> "1..* {ordered}" Course: teaches &#9654
+    
+    class Module{
+        +name: String
+        +course: Course
+        +grade: double
+        +exam: Exam
+        +setCourse(course: Course): void
+        +setGrade(grade: double): void
+        +setModulePassword(password: String): void    
+    }
+    
+    Module "1" o-- "1..5 {unique, ordered}" Course: consists of &#9654
+    UniversityAdministration "1" <--> "1..*" Module: edits &#9654
+    Lecturer "1" <--> "1..*" Module: edits &#9654
+
 ```
 
 ## Exercise: Banking (UML Class Diagram Modelling)

@@ -63,6 +63,125 @@ classDiagram
     }
 ```
 
+
+
+## Übung: Studierendenverwaltungssystem (Student Enrollment System; UML-Klassendiagramm-Modellierung mit Fokus auf Assoziationen)
+
+Ihre Aufgabe ist es, ein Studierendenverwaltungssystem mithilfe von objektorientierten Programmierprinzipien in Java zu entwerfen.
+
+Das System sollte in der Lage sein, Informationen über Nutzer&ast;innen (Admins, Studierende, Dozierende), Kurse, Module und Noten zu speichern.
+
+### Aufgaben
+
+1. Implementieren Sie anhand des untenstehenden Klassendiagramms die Java-Klassen für `User`, `Student`, `Lecturer`, `Course`, `Module`, `Admin` und `UniversityAdministration` im `de.phl.programmingproject.enrollmentsystem` Paket.
+    * Jede Klasse sollte geeignete Konstruktoren, Getter und Setter haben.
+    * Achten Sie besonders auf die Implementierung der Assoziationen.
+2. Erstellen Sie eine Hauptmethode, um Ihr Studentenverwaltungssystem zu testen.
+
+Zur Klarstellung, falls es im UML-Diagramm nicht sichtbar ist, sind hier die Anforderungen für die Assoziationen aufgelistet:
+* Ein Admin kann ein System verwalten. Das System kann von 2 Admins verwaltet werden.
+* Ein Admin kann mehrere Studierende verwalten. Ein&ast;e Studierende&ast;r kann von zwei Admins verwaltet werden.
+* Zwei Admins kann mehrere Dozierende verwalten. Ein&ast;e Dozent&ast;in kann von zwei Admins verwaltet werden.
+* Ein&ast;e Studierende&ast;r kann mehrere Kurse besuchen und ein Kurs kann mehrere Studierende haben.
+    * Studierende können denselben Kurs nicht zweimal besuchen.
+* Ein&ast;e Dozent&ast;in kann mehrere Kurse unterrichten, aber ein Kurs kann nur von einer&ast;m Dozent&ast;in unterrichtet werden.
+    * Die von einer&ast;m Dozent&ast;in zu unterrichtenden Kurse sind geordnet.
+* Ein Modul besteht genau aus 5 Kursen und ein Kurs kann nur Teil eines Moduls sein.
+    * Die Kurse in einem Modul sind geordnet und können nicht doppelt vorkommen.
+* Ein&ast;e Dozent&ast;in kann mehrere Module bearbeiten, aber ein Modul kann nur von einer&ast;m Dozent&ast;in bearbeitet werden.
+* Die Universitätsverwaltung kann mehrere Module bearbeiten, aber ein Modul kann nur von einer Universitätsverwaltung bearbeitet werden.
+
+```mermaid
+
+classDiagram
+    
+    class User{
+        +name: String
+        -password: String
+        +setPassword(password: String): void
+        +communicate(message: String, recipients: List<User>): void
+    }
+    
+    class UniversityAdministration{
+        +name: String
+        -password: String
+        +setPassword(password: String): void
+        +communicate(message: String, recipients: List<User>): void
+    }
+    
+    class Admin{
+        +name: String
+        -password: String
+        +setPassword(user: User, password: String): void
+        +getPassword(): String
+        +communicate(message: String, recipients: List<User>): void
+  }
+    User <|-- Admin
+
+    Admin "2" <--> "1" UniversityAdministration: manages &#9654
+
+    class Student{
+        +name: String
+        +dateOfBirth: Date
+        +id: int
+        +residence: String
+        +subject: String
+        +studyProgram: String
+        -password: String
+        +enroll(course: Course): void
+        +getGrade(module: Module): double
+        +communicate(message: String, recipients: List<User>): void
+        +setPassword(password: String): void
+    }
+    
+    User <|-- Student
+    Admin "2" <--> "1..*" Student: manages &#9654
+    
+    class Lecturer{
+        +name: String
+        +age: double
+        +field: String
+        -password: String
+        +teach(course: Course): void
+        +communicate(message: String, recipients: List<User>): void
+        +setPassword(password: String): void    
+    }
+    
+    User <|-- Lecturer
+    Admin "2" <--> "1..*" Lecturer: manages &#9654
+    
+    class Course{
+        +name: String
+        +numberOfStudents: int
+        +proofOfParticipation: String
+        +module: Module
+        +getStudents(): List<Student>
+        +getNumberOfStudents(): int
+        +setNumberOfStudents(numberOfStudents: int): void
+        +setProofOfParticipation(proofOfParticipation: String): void
+        +getModule(): Module
+        +setModule(module: Module): void
+    }
+    
+    Student "1..* {unique}" <--> "1..* {unique}" Course: attends &#9654
+    Lecturer "1" <--> "1..* {ordered}" Course: teaches &#9654
+    
+    class Module{
+        +name: String
+        +course: Course
+        +grade: double
+        +exam: Exam
+        +setCourse(course: Course): void
+        +setGrade(grade: double): void
+        +setModulePassword(password: String): void    
+    }
+    
+    Module "1" o-- "1..5 {unique, ordered}" Course: consists of &#9654
+    UniversityAdministration "1" <--> "1..*" Module: edits &#9654
+    Lecturer "1" <--> "1..*" Module: edits &#9654
+
+```
+
 ## Übung: Sushi-Bestellsystem (Sushi Ordering System)
 
 Ihre Aufgabe ist es, ein Sushi-Bestellsystem mithilfe von objektorientierten Programmierprinzipien in Java zu entwerfen.
