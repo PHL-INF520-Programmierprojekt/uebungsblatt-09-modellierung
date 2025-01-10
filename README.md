@@ -17,6 +17,7 @@ Das System sollte in der Lage sein, Informationen über Bücher (`book`), Autor&
 
 Jedes Buch sollte einen Titel, eine ISBN, eine geordnete Menge von Autor&ast;innen und die Anzahl der verfügbaren Exemplare haben.
 Jede&ast;r Autor&ast;in sollte einen Namen, ein Geburtsdatum und eine sortierte Menge von Büchern, die sie/er geschrieben hat, haben.
+Jede Bibliothek kann beliebig viele Mitglieder haben. Jedes Mitglied kann Mitglied von mehreren Bibliotheken sein.
 Jedes Mitglied sollte einen Namen, eine eindeutige ID und eine Menge von Büchern, die sie/er ausgeliehen hat, haben.
 Das System sollte auch mehrere Bibliotheken verwalten können, jede mit ihrer eigenen Sammlung von Büchern, Autor&ast;innen und Mitgliedern.
 
@@ -79,9 +80,8 @@ Das System sollte in der Lage sein, Informationen über Nutzer&ast;innen (Admins
 2. Erstellen Sie eine Hauptmethode, um Ihr Studentenverwaltungssystem zu testen.
 
 Zur Klarstellung, falls es im UML-Diagramm nicht sichtbar ist, sind hier die Anforderungen für die Assoziationen aufgelistet:
-* Ein Admin kann ein System verwalten. Das System kann von 2 Admins verwaltet werden.
 * Ein Admin kann mehrere Studierende verwalten. Ein&ast;e Studierende&ast;r kann von zwei Admins verwaltet werden.
-* Zwei Admins kann mehrere Dozierende verwalten. Ein&ast;e Dozent&ast;in kann von zwei Admins verwaltet werden.
+* Ein Admin kann mehrere Dozierende verwalten. Ein&ast;e Dozent&ast;in kann von zwei Admins verwaltet werden.
 * Ein&ast;e Studierende&ast;r kann mehrere Kurse besuchen und ein Kurs kann mehrere Studierende haben.
     * Studierende können denselben Kurs nicht zweimal besuchen.
 * Ein&ast;e Dozent&ast;in kann mehrere Kurse unterrichten, aber ein Kurs kann nur von einer&ast;m Dozent&ast;in unterrichtet werden.
@@ -89,97 +89,61 @@ Zur Klarstellung, falls es im UML-Diagramm nicht sichtbar ist, sind hier die Anf
 * Ein Modul besteht genau aus 5 Kursen und ein Kurs kann nur Teil eines Moduls sein.
     * Die Kurse in einem Modul sind geordnet und können nicht doppelt vorkommen.
 * Ein&ast;e Dozent&ast;in kann mehrere Module bearbeiten, aber ein Modul kann nur von einer&ast;m Dozent&ast;in bearbeitet werden.
-* Die Universitätsverwaltung kann mehrere Module bearbeiten, aber ein Modul kann nur von einer Universitätsverwaltung bearbeitet werden.
 
 ```mermaid
-
 classDiagram
-    
-    class User{
-        +name: String
-        -password: String
-        +setPassword(password: String): void
-        +communicate(message: String, recipients: List<User>): void
+    class User {
+        «get/set» name: String
+        «set» password: String
+        «get» id: int
+        +communicate(message: String, recipients: List): void
     }
-    
-    class UniversityAdministration{
-        +name: String
-        -password: String
-        +setPassword(password: String): void
-        +communicate(message: String, recipients: List<User>): void
-    }
-    
-    class Admin{
-        +name: String
-        -password: String
-        +setPassword(user: User, password: String): void
-        +getPassword(): String
-        +communicate(message: String, recipients: List<User>): void
-  }
-    User <|-- Admin
 
-    Admin "2" <--> "1" UniversityAdministration: manages &#9654
-
-    class Student{
-        +name: String
-        +dateOfBirth: Date
-        +id: int
-        +residence: String
-        +subject: String
-        +studyProgram: String
-        -password: String
-        +enroll(course: Course): void
-        +getGrade(module: Module): double
-        +communicate(message: String, recipients: List<User>): void
-        +setPassword(password: String): void
+    class Student {
+        «get» courses: List
+        +Student(id: int, name: String, email: String)
+        +enroll(Course course): void
+        +removeCourse(Course course): void
     }
-    
-    User <|-- Student
-    Admin "2" <--> "1..*" Student: manages &#9654
-    
-    class Lecturer{
-        +name: String
-        +age: double
-        +field: String
-        -password: String
+
+    class Lecturer {
+        «get» courses: List
+        +Lecturer(id: int, name: String, email: String)
         +teach(course: Course): void
-        +communicate(message: String, recipients: List<User>): void
-        +setPassword(password: String): void    
+        +removeCourse(course: Course): void
     }
-    
-    User <|-- Lecturer
-    Admin "2" <--> "1..*" Lecturer: manages &#9654
-    
-    class Course{
-        +name: String
-        +numberOfStudents: int
-        +proofOfParticipation: String
-        +module: Module
-        +getStudents(): List<Student>
-        +getNumberOfStudents(): int
-        +setNumberOfStudents(numberOfStudents: int): void
-        +setProofOfParticipation(proofOfParticipation: String): void
-        +getModule(): Module
-        +setModule(module: Module): void
-    }
-    
-    Student "1..* {unique}" <--> "1..* {unique}" Course: attends &#9654
-    Lecturer "1" <--> "1..* {ordered}" Course: teaches &#9654
-    
-    class Module{
-        +name: String
-        +course: Course
-        +grade: double
-        +exam: Exam
-        +setCourse(course: Course): void
-        +setGrade(grade: double): void
-        +setModulePassword(password: String): void    
-    }
-    
-    Module "1" o-- "1..5 {unique, ordered}" Course: consists of &#9654
-    UniversityAdministration "1" <--> "1..*" Module: edits &#9654
-    Lecturer "1" <--> "1..*" Module: edits &#9654
 
+    class Course {
+        «get/set» name: String
+        «get/set» numberOfStudents: int
+        «get/set»proofOfParticipation: String
+        «get/set» module: Module
+        +getStudents(): List
+    }
+
+    class Admin {
+        +setPassword(user: User, password: String): void
+        +getPassword(user: User): String
+    }
+
+    class Module {
+        «get/set» name: String
+        «get/set» course: Course
+        «get/set» grade: double
+        «get/set» exam: Exam
+        +setModulePassword(password: String): void
+    }
+
+%% Beziehungen und Kardinalitäten
+    User <|-- Admin
+    User <|-- Student
+    User <|-- Lecturer
+    Admin "2" <--> "1..*" Student : manages &#9654 
+    Admin "2" <--> "1..*" Lecturer : manages &#9654
+    Lecturer "1" <--> "1..*" Module : edits &#9654
+    Lecturer "1" --> "1..* {ordered}" Course : teaches &#9654
+    Module "1" o-- "1..5 {unique, ordered}" Course : consists of &#9654
+    Student "1..* {unique}" <--> "1..* {unique}" Course : attends &#9654
 ```
 
 ## Übung: Sushi-Bestellsystem (Sushi Ordering System)
@@ -394,7 +358,7 @@ public class Holder {
 ## Übung: Online-Shopping-Checkout
 
 Ihre Aufgabe ist es, einen Online-Shopping-Checkout-Prozess mithilfe von UML-Sequenzdiagrammen zu modellieren.
-Der Checkout-Prozess beinhaltet das Hinzufügen von Artikeln (`item) zum Warenkorb (`shopping cart`), das Eingeben von Zahlungs- und Versandinformationen (`payment` und `shipping information`) und das Aufgeben der Bestellung (`order`).
+Der Checkout-Prozess beinhaltet das Hinzufügen von Artikeln (`item`) zum Warenkorb (`shopping cart`), das Eingeben von Zahlungs- und Versandinformationen (`payment` und `shipping information`) und das Aufgeben der Bestellung (`order`).
 
 ### Aufgaben
 

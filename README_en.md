@@ -17,7 +17,8 @@ You are tasked with designing a Library Management System using object-oriented 
 The system should be able to store information about books, authors, library members, and the library. 
 
 Each book should have a title, an ISBN, an ordered set of authors, and the number of copies available. 
-Each author should have a name, a date of birth, and a sorted set of books they have written. 
+Each author should have a name, a date of birth, and a sorted set of books they have written.
+Each library can have any number of members. Each member can be a member of several libraries.
 Each member should have a name, a unique ID, and a set of books they have borrowed. 
 The system should also be able to handle multiple libraries, each with its own collection of books, authors, and members.
 
@@ -118,7 +119,6 @@ The system should be able to store information about users (admins, students, le
 2. Create a main method to test your Student Enrollment System.
 
 For clarification, in case it is not visible in the UML diagram, the following are the requirements for the associations:
-* An admin can manage one system. The system can be managed by two admins.
 * An admin can manage multiple students. A student can be managed by two admins.
 * An admin can manage multiple lecturers. A lecturer can be managed by two admins.
 * A student can attend multiple courses, and a course can have multiple students.
@@ -128,96 +128,61 @@ For clarification, in case it is not visible in the UML diagram, the following a
 * A module consists of exactly 5 courses, and a course can be part of only one module.
     * The courses in a module are ordered and unique.
 * A lecturer can edit multiple modules, but one module can only be edited by one lecturer.
-* The university administration can edit multiple modules, but one module can only be edited by one university administration.
 
 ```mermaid
-
 classDiagram
-    
-    class User{
-        +name: String
-        -password: String
-        +setPassword(password: String): void
-        +communicate(message: String, recipients: List<User>): void
+    class User {
+        «get/set» name: String
+        «set» password: String
+        «get» id: int
+        +communicate(message: String, recipients: List): void
     }
-    
-    class UniversityAdministration{
-        +name: String
-        -password: String
-        +setPassword(password: String): void
-        +communicate(message: String, recipients: List<User>): void
-    }
-    
-    class Admin{
-        +name: String
-        -password: String
-        +setPassword(user: User, password: String): void
-        +getPassword(): String
-        +communicate(message: String, recipients: List<User>): void
-  }
-    User <|-- Admin
 
-    Admin "2" <--> "1" UniversityAdministration: manages &#9654
-
-    class Student{
-        +name: String
-        +dateOfBirth: Date
-        +id: int
-        +residence: String
-        +subject: String
-        +studyProgram: String
-        -password: String
-        +enroll(course: Course): void
-        +getGrade(module: Module): double
-        +communicate(message: String, recipients: List<User>): void
-        +setPassword(password: String): void
+    class Student {
+        «get» courses: List
+        +Student(id: int, name: String, email: String)
+        +enroll(Course course): void
+        +removeCourse(Course course): void
     }
-    
-    User <|-- Student
-    Admin "2" <--> "1..*" Student: manages &#9654
-    
-    class Lecturer{
-        +name: String
-        +age: double
-        +field: String
-        -password: String
+
+    class Lecturer {
+        «get» courses: List
+        +Lecturer(id: int, name: String, email: String)
         +teach(course: Course): void
-        +communicate(message: String, recipients: List<User>): void
-        +setPassword(password: String): void    
+        +removeCourse(course: Course): void
     }
-    
+
+    class Course {
+        «get/set» name: String
+        «get/set» numberOfStudents: int
+        «get/set»proofOfParticipation: String
+        «get/set» module: Module
+        +getStudents(): List
+    }
+
+    class Admin {
+        +setPassword(user: User, password: String): void
+        +getPassword(user: User): String
+    }
+
+    class Module {
+        «get/set» name: String
+        «get/set» course: Course
+        «get/set» grade: double
+        «get/set» exam: Exam
+        +setModulePassword(password: String): void
+    }
+
+%% Beziehungen und Kardinalitäten
+    User <|-- Admin
+    User <|-- Student
     User <|-- Lecturer
-    Admin "2" <--> "1..*" Lecturer: manages &#9654
-    
-    class Course{
-        +name: String
-        +numberOfStudents: int
-        +proofOfParticipation: String
-        +module: Module
-        +getStudents(): List<Student>
-        +getNumberOfStudents(): int
-        +setNumberOfStudents(numberOfStudents: int): void
-        +setProofOfParticipation(proofOfParticipation: String): void
-        +getModule(): Module
-        +setModule(module: Module): void
-    }
-    
-    Student "1..* {unique}" <--> "1..* {unique}" Course: attends &#9654
-    Lecturer "1" <--> "1..* {ordered}" Course: teaches &#9654
-    
-    class Module{
-        +name: String
-        +course: Course
-        +grade: double
-        +exam: Exam
-        +setCourse(course: Course): void
-        +setGrade(grade: double): void
-        +setModulePassword(password: String): void    
-    }
-    
-    Module "1" o-- "1..5 {unique, ordered}" Course: consists of &#9654
-    UniversityAdministration "1" <--> "1..*" Module: edits &#9654
-    Lecturer "1" <--> "1..*" Module: edits &#9654
+    Admin "2" <--> "1..*" Student : manages &#9654
+    Admin "2" <--> "1..*" Lecturer : manages &#9654
+    Lecturer "1" <--> "1..*" Module : edits &#9654
+    Lecturer "1" --> "1..* {ordered}" Course : teaches &#9654
+    Module "1" o-- "1..5 {unique, ordered}" Course : consists of &#9654
+    Student "1..* {unique}" <--> "1..* {unique}" Course : attends &#9654
 
 ```
 
