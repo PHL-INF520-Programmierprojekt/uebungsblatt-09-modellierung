@@ -177,12 +177,12 @@ classDiagram
     User <|-- Admin
     User <|-- Student
     User <|-- Lecturer
-    Admin "2" <--> "1..*" Student : manages &#9654
-    Admin "2" <--> "1..*" Lecturer : manages &#9654
-    Lecturer "1" <--> "1..*" Module : edits &#9654
-    Lecturer "1" --> "1..* {ordered}" Course : teaches &#9654
-    Module "1" o-- "1..5 {unique, ordered}" Course : consists of &#9654
-    Student "1..* {unique}" <--> "1..* {unique}" Course : attends &#9654
+    Admin "2" <--> "1..*" Student : manages #9654;
+    Admin "2" <--> "1..*" Lecturer : manages #9654;
+    Lecturer "1" <--> "1..*" Module : edits #9654;
+    Lecturer "1" --> "1..* {ordered}" Course : teaches #9654;
+    Module "1" o-- "1..5 {unique, ordered}" Course : consists of #9654;
+    Student "1..* {unique}" <--> "1..* {unique}" Course : attends #9654;
 
 ```
 
