@@ -159,9 +159,10 @@ Im Restaurant können Bestellungen aufgegeben werden. Jede Bestellung besteht au
 ### Aufgaben
 
 1. Fügen Sie dem untenstehenden Klassendiagramm die notwendigen Beziehungen zwischen den Klassen mit UML-Notation hinzu.
-2. Aktualisieren Sie das Klassendiagramm, um eine `Restaurant`-Klasse einzufügen, die einen Namen und eine Liste von Sushi-Gerichten und Zutaten hat. Fügen Sie die notwendigen Assoziationen zwischen den Klassen hinzu, um dies widerzuspiegeln.
-3. Eine wichtige Zutat für Sushi ist Reis. Diskutieren Sie, ob eine solche Einschränkung (`constraint`) direkt in UML-Klassendiagrammen modelliert werden kann.
-4. Laden Sie Ihre Lösung als Markdown-Datei `sushi_ordering_system.md` oder als PDF-Datei `sushi_ordering_system.pdf` im Hauptverzeichnis hoch.
+2. Überarbeiten Sie Ihr UML-Klassendiagramm so, dass alle Assoziationen explizite Multiplizitäten mit unterer und oberer Grenze haben. Verwenden Sie dabei die UML-Notation a..b (z. B. 0..*, 1..1, 2..*, 5..5). Die Kurznotation * ist nicht erlaubt.
+3. Aktualisieren Sie das Klassendiagramm, um eine `Restaurant`-Klasse einzufügen, die einen Namen und eine Liste von Sushi-Gerichten und Zutaten hat. Fügen Sie die notwendigen Assoziationen zwischen den Klassen hinzu, um dies widerzuspiegeln.
+4. Eine wichtige Zutat für Sushi ist Reis. Diskutieren Sie, ob eine solche Einschränkung (`constraint`) direkt in UML-Klassendiagrammen modelliert werden kann.
+5. Laden Sie Ihre Lösung als Markdown-Datei `sushi_ordering_system.md` oder als PDF-Datei `sushi_ordering_system.pdf` im Hauptverzeichnis hoch.
     * Bonus: Verwenden Sie die [`Mermaid` Markdown-Erweiterung](https://mermaid.js.org/syntax/classDiagram.html), um das Klassendiagramm direkt in Markdown zu zeichnen.
 
 ### UML-Klassendiagramm
