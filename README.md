@@ -10,7 +10,7 @@ In diesem Übungsblatt lernen Sie, UML-Klassendiagramme und Sequenzdiagramme zu 
     * `«get/set»` kennzeichnet ein privates Feld mit `public` Get- und Set-Methoden.
     * `«get»` kennzeichnet ein privates (`readonly`) Feld mit einem `public` Get-Methode.
 
-## Übung: Bibliotheksverwaltungssystem (Library Management System)
+## Übung 1: Bibliotheksverwaltungssystem (Library Management System)
 
 Ihre Aufgabe ist es, ein Bibliotheksverwaltungssystem mithilfe von objektorientierten Programmierprinzipien in Java zu entwerfen.
 Das System sollte in der Lage sein, Informationen über Bücher (`book`), Autor&ast;innen (`author`), Bibliotheksmitglieder (`member`) und die Bibliothek (`library`) zu speichern.
@@ -77,7 +77,7 @@ Das System sollte in der Lage sein, Informationen über Nutzer&ast;innen (Admins
 1. Implementieren Sie anhand des untenstehenden Klassendiagramms die Java-Klassen für `User`, `Student`, `Lecturer`, `Course`, `Module`, `Admin` und `UniversityAdministration` im `de.phl.programmingproject.enrollmentsystem` Paket.
     * Jede Klasse sollte geeignete Konstruktoren, Getter und Setter haben.
     * Achten Sie besonders auf die Implementierung der Assoziationen.
-2. Erstellen Sie eine Hauptmethode, um Ihr Studentenverwaltungssystem zu testen.
+2. Erstellen Sie eine *main* Methode, um Ihr Studentenverwaltungssystem zu testen.
 
 Zur Klarstellung, falls es im UML-Diagramm nicht sichtbar ist, sind hier die Anforderungen für die Assoziationen aufgelistet:
 * Ein Admin kann mehrere Studierende verwalten. Ein&ast;e Studierende&ast;r kann von zwei Admins verwaltet werden.
@@ -146,7 +146,7 @@ classDiagram
     Student "1..* {unique}" <--> "1..* {unique}" Course : attends #9654;
 ```
 
-## Übung: Sushi-Bestellsystem (Sushi Ordering System)
+## Übung 2: Sushi-Bestellsystem (Sushi Ordering System)
 
 Ihre Aufgabe ist es, ein Sushi-Bestellsystem mithilfe von objektorientierten Programmierprinzipien in Java zu entwerfen.
 Das System sollte in der Lage sein, Informationen über die verfügbaren Sushi-Gerichte (`SushiDish`) und die Zutaten (`Ingredient`), die zur Herstellung verwendet werden, zu speichern.
@@ -185,7 +185,7 @@ classDiagram
     }
 ```
 
-## Übung: Bankwesen (UML-Klassendiagramm-Modellierung)
+## Übung 3: Bankwesen (UML-Klassendiagramm-Modellierung)
 
 In dieser Übung werden Sie ein einfaches Bankensystem mit UML-Klassendiagrammen modellieren.
 Sie haben die folgenden Java-Klassen erhalten (auch verfügbar im Paket `de.phl.programmingproject.banking`):
@@ -355,7 +355,7 @@ public class Holder {
 5. Aktualisieren Sie den Quellcode entsprechend.
 
 
-## Übung: Online-Shopping-Checkout
+## Übung 4: Online-Shopping-Checkout
 
 Ihre Aufgabe ist es, einen Online-Shopping-Checkout-Prozess mithilfe von UML-Sequenzdiagrammen zu modellieren.
 Der Checkout-Prozess beinhaltet das Hinzufügen von Artikeln (`item`) zum Warenkorb (`shopping cart`), das Eingeben von Zahlungs- und Versandinformationen (`payment` und `shipping information`) und das Aufgeben der Bestellung (`order`).

@@ -11,7 +11,7 @@ In this exercise sheet, you will learn to read and write UML class and sequence 
   * `«get»` denotes a private (readonly) field with a public getter.
 
 
-## Exercise: Library Management System
+## Exercise 1: Library Management System
 
 You are tasked with designing a Library Management System using object-oriented programming principles in Java. 
 The system should be able to store information about books, authors, library members, and the library. 
@@ -65,7 +65,7 @@ classDiagram
     }
 ```
 
-## Exercise: Sushi Ordering System
+## Exercise 2: Sushi Ordering System
 
 You are tasked with designing a sushi ordering system using object-oriented programming principles in Java. 
 The system should be able to store information about the available sushi dishes and the ingredients used to make them.
@@ -104,7 +104,7 @@ classDiagram
     }
 ```
 
-## Exercise: Student Enrollment System (Transformation of an UML Class Diagram Modeling with Focus on Associations)
+## Exercise 3: Student Enrollment System (Transformation of an UML Class Diagram Modeling with Focus on Associations)
 
 You are tasked with designing a student enrollment system using object-oriented programming principles in Java.
 The system should be able to store information about users (admins, students, lecturers), courses, modules, and grades.
@@ -186,7 +186,7 @@ classDiagram
 
 ```
 
-## Exercise: Banking (UML Class Diagram Modelling)
+## Exercise 4: Banking (UML Class Diagram Modelling)
 
 In this exercise, you are going to model a simple banking system using UML class diagrams. 
 You have been given the following Java classes (also available in the `de.phl.programmingproject.banking` package):
