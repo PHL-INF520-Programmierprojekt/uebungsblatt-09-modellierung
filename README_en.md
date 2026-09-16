@@ -356,7 +356,7 @@ public class Holder {
 5. Update the source code respectively.
 
 
-## Exercise: Online Shopping Checkout
+## Exercise 5: Online Shopping Checkout
 
 You are tasked with modeling an online shopping checkout process using UML sequence diagrams. 
 The checkout process includes adding items to the shopping cart, entering payment and shipping information, and placing the order.

@@ -66,7 +66,7 @@ classDiagram
 
 
 
-## Übung: Studierendenverwaltungssystem (Student Enrollment System; UML-Klassendiagramm-Modellierung mit Fokus auf Assoziationen)
+## Übung 2: Studierendenverwaltungssystem (Student Enrollment System; UML-Klassendiagramm-Modellierung mit Fokus auf Assoziationen)
 
 Ihre Aufgabe ist es, ein Studierendenverwaltungssystem mithilfe von objektorientierten Programmierprinzipien in Java zu entwerfen.
 
@@ -100,14 +100,14 @@ classDiagram
     }
 
     class Student {
-        «get» courses: List
+        «get» courses: []
         +Student(id: int, name: String, email: String)
         +enroll(Course course): void
         +removeCourse(Course course): void
     }
 
     class Lecturer {
-        «get» courses: List
+        «get» courses: []
         +Lecturer(id: int, name: String, email: String)
         +teach(course: Course): void
         +removeCourse(course: Course): void
@@ -146,7 +146,7 @@ classDiagram
     Student "1..* {unique}" <--> "1..* {unique}" Course : attends #9654;
 ```
 
-## Übung 2: Sushi-Bestellsystem (Sushi Ordering System)
+## Übung 3: Sushi-Bestellsystem (Sushi Ordering System)
 
 Ihre Aufgabe ist es, ein Sushi-Bestellsystem mithilfe von objektorientierten Programmierprinzipien in Java zu entwerfen.
 Das System sollte in der Lage sein, Informationen über die verfügbaren Sushi-Gerichte (`SushiDish`) und die Zutaten (`Ingredient`), die zur Herstellung verwendet werden, zu speichern.
@@ -186,7 +186,7 @@ classDiagram
     }
 ```
 
-## Übung 3: Bankwesen (UML-Klassendiagramm-Modellierung)
+## Übung 4: Bankwesen (UML-Klassendiagramm-Modellierung)
 
 In dieser Übung werden Sie ein einfaches Bankensystem mit UML-Klassendiagrammen modellieren.
 Sie haben die folgenden Java-Klassen erhalten (auch verfügbar im Paket `de.phl.programmingproject.banking`):
@@ -356,7 +356,7 @@ public class Holder {
 5. Aktualisieren Sie den Quellcode entsprechend.
 
 
-## Übung 4: Online-Shopping-Checkout
+## Übung 5: Online-Shopping-Checkout
 
 Ihre Aufgabe ist es, einen Online-Shopping-Checkout-Prozess mithilfe von UML-Sequenzdiagrammen zu modellieren.
 Der Checkout-Prozess beinhaltet das Hinzufügen von Artikeln (`item`) zum Warenkorb (`shopping cart`), das Eingeben von Zahlungs- und Versandinformationen (`payment` und `shipping information`) und das Aufgeben der Bestellung (`order`).
